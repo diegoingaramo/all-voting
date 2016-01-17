@@ -4,10 +4,35 @@
   display: block;
 }
 
-.services section {
-  text-align: center;
+.navbar {
+    margin-bottom: 0;
 }
 
-.navbar-brand {
+.navbar-default .navbar-brand {
     padding: 15px 15px 15px 30px;
+    color: #0B94D8;
+}
+
+
+/* Default container */
+
+.default-container {
+    background-image: url('../images/1.jpg');
+    background-position: center center;
+    background-size: cover;
+    height: 250px;
+    padding: 30px
+}
+
+.default-container .title {
+    text-align: center;
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: #0B94D8;
+}
+
+.default-container .intro {
+    text-align: center;
+    color: #000000;
 }
