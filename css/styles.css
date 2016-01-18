@@ -13,6 +13,14 @@
     color: #0B94D8;
 }
 
+.btn {
+    padding: 6px 50px;
+}
+
+.btn-info {
+    background-color: #0B94D8;
+}
+
 
 /* default container */
 
