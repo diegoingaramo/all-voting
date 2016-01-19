@@ -31,11 +31,11 @@
     background-position: center center;
     background-size: cover;
     height: 250px;
-    padding: 30px
+    padding: 30px;
+    text-align: center;
 }
 
 .intro-container .title {
-    text-align: center;
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
@@ -43,9 +43,15 @@
 }
 
 .intro-container .intro {
-    text-align: center;
     color: #000000;
 }
+
+.intro-container button {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 
 /* res container */
 
@@ -54,3 +60,9 @@
 }
 
 /* end default container */
+
+/* */
+#newPoll .btn-info {
+ background-color: #FFFFFF;   
+ color: black;
+}
