@@ -61,8 +61,27 @@
 
 /* end default container */
 
-/* */
+/* new poll */
+
 #newPoll .btn-info {
  background-color: #FFFFFF;   
  color: black;
+ border-color: #adadad;
 }
+
+#newPoll .btn-info:hover {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+}
+
+#newPoll .form-inline input {
+    width: 93%;
+    display: inline;
+}
+
+#delete_button {
+    cursor: pointer;
+}
+
+/* end new poll */
