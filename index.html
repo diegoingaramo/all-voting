@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="appPoll">
+<html lang="en" ng-app= "appPoll">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,43 +12,12 @@
 
 
     <!-- navigation bar -->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span> 
-          </button>
-          <a class="navbar-brand" href="#">All Voting</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <customnavbar></customnavbar>
+    
 
     <!-- home container -->
     <div class="home-container">
-        <!-- intro container -->
-        <div class="intro-container">
-          <div class="container-fluid">
-              <div class="row">
-                  <div class="col-xs-12">
-                    <h1 class="title">All Voting</h1>
-                    <p class="lead intro">Create your own personal polls.</p>
-                      <button class="btn btn-success btn-sm" type="button">New Poll</button> <button type="button" class="btn btn-info btn-sm">My Polls</button>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <!-- intro intro container -->
+        <intropanel></intropanel>
 
         <!-- res container -->    
         <div class="res-container">
@@ -145,6 +114,8 @@
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
-<script src="js/script.js"></script>
+<script src="js/app.js"></script>
+<script src="components/navbar/navbar.js"></script>
+<script src="components/intro/intro.js"></script>
 </body>
 </html>

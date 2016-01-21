@@ -1,4 +1,4 @@
-var appPoll = angular.module('appPoll', []);
+var app = angular.module('appPoll', []);
 
 /* Controller */
 
@@ -40,4 +40,4 @@ var pollController = function pollController($scope){
 
 
 
-appPoll.controller('PollController',pollController);
+app.controller('PollController',pollController);
