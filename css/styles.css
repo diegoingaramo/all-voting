@@ -80,7 +80,8 @@
     display: inline;
 }
 
-#delete_button {
+#delete_button,
+#close_button {
     cursor: pointer;
 }
 
