@@ -1,0 +1,28 @@
+<!-- new poll page -->
+<section id="newPoll" class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 text-center" ng-controller="PollNewController">
+                        <h2>New Poll</h2>
+                        <h4>Name your poll</h4>
+                        <div class="row">
+                            <div class="col-sm-offset-2 col-sm-8">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="{{newQuestionPlaceholder}}" aria-describedby="sizing-addon2" id="usr" ng-model="newQuestion" />
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Options</h4>
+                        <div class="row">
+                            <div class="col-sm-offset-2 col-sm-8">
+                                <div ng-repeat="newChoice in newChoices">
+                                        <div class="form-inline form-group">
+                                            <input type="text" class="form-control" placeholder="{{newChoice.placeholder}}" aria-describedby="sizing-addon2" ng-model="newChoice.question">                                        
+                                            <span class="glyphicon glyphicon-trash" ng-click="deleteChoice($index)" id="delete_button"></span>
+                                        </div>                                         
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning" ng-show="showMaxSizeError">
+                            <strong>Ops !</strong> You must have at least two choices... <i id="close_button" ng-click="hideMessage()" class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
+                        </div>
+                        <button type="button" class="btn btn-info btn-sm" ng-click="addChoice()">More Options</button>
+                        <button type="button" class="btn btn-success btn-sm">Submit</button>
+</section>

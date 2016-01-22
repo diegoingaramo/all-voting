@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app= "appPoll">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <title>Poll Application</title>
 </head>
-<body>
+<body ng-app= "appPoll" ng-controller="AppController as app">
 
 
     <!-- navigation bar -->
@@ -23,87 +23,7 @@
         <div class="res-container">
             <div class="container-fluid">
                 <div class="row">
-
-                    <!-- search polls -->
-                    <!--
-                    <section id="search" class="col-sm-offset-3 col-sm-6">
-                        <div class="input-group">                       
-                          <input type="text" class="form-control" placeholder="Search for polls !" aria-describedby="sizing-addon2">
-                            <span class="input-group-btn">
-                               <button class="btn btn-secondary" type="button">Go!</button>
-                           </span>
-                        </div>
-                    </section>
-                    -->
-
-                    <!-- signup page -->
-                    <!--
-                    <section id="signup" class="col-sm-offset-3 col-sm-6">
-                        <div class="form-group">   
-                          <label for="usr">Name</label>
-                          <input type="text" class="form-control" aria-describedby="sizing-addon2" id="usr">
-                        </div>
-                        <div class="form-group">   
-                          <label for="email">Email</label>
-                          <input type="text" class="form-control" aria-describedby="sizing-addon2" id="email">
-                        </div>
-                        <div class="form-group">   
-                          <label for="password">Password</label>
-                          <input type="text" class="form-control" aria-describedby="sizing-addon2" id="password">
-                        </div>
-                        <div class="form-group">   
-                          <label for="rPassword">Password Verification</label>
-                          <input type="text" class="form-control" aria-describedby="sizing-addon2" id="rPassword">
-                        </div>
-                        <button type="button" class="btn btn-success btn-sm">Sign Up</button>
-                    </section>
-                    -->
-
-                    <!-- login page -->
-                    <!--
-                    <section id="login" class="col-sm-offset-3 col-sm-6">
-                        <div class="form-group">   
-                          <label for="email">Email</label>
-                          <input type="text" class="form-control" placeholder="Please enter your user email" aria-describedby="sizing-addon2" id="email">
-                        </div>
-                        <div class="form-group">   
-                          <label for="password">Password</label>
-                          <input type="text" class="form-control" placeholder="Please enter your user password" aria-describedby="sizing-addon2" id="password">
-                        </div>
-                        <button type="button" class="btn btn-info btn-sm">Login</button>
-                    </section>
-                    -->
-
-                    <!-- new poll page -->
-                    <section id="newPoll" class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 text-center" ng-controller="PollController">
-                        <h2>New Poll</h2>
-                        <h4>Name your poll</h4>
-                        <div class="row">
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="{{newQuestionPlaceholder}}" aria-describedby="sizing-addon2" id="usr" ng-model="newQuestion" />
-                                </div>
-                            </div>
-                        </div>
-                        <h4>Options</h4>
-                        <div class="row">
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <div ng-repeat="newChoice in newChoices">
-                                        <div class="form-inline form-group">
-                                            <input type="text" class="form-control" placeholder="{{newChoice.placeholder}}" aria-describedby="sizing-addon2" ng-model="newChoice.question">                                        
-                                            <span class="glyphicon glyphicon-trash" ng-click="deleteChoice($index)" id="delete_button"></span>
-                                        </div>                                         
-                                </div>
-                            </div>
-                        </div>
-                        <div class="alert alert-warning" ng-show="showMaxSizeError">
-                            <strong>Ops !</strong> You must have at least two choices... <i id="close_button" ng-click="hideMessage()" class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
-                        </div>
-                        <button type="button" class="btn btn-info btn-sm" ng-click="addChoice()">More Options</button>
-                        <button type="button" class="btn btn-success btn-sm">Submit</button>
-                    </section>
-
-
+                    <div ng-viewport></div>
                   </div>
             </div>
         </div>
@@ -114,8 +34,13 @@
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
+<script src="js/router.es5.js"></script>
 <script src="js/app.js"></script>
-<script src="components/navbar/navbar.js"></script>
-<script src="components/intro/intro.js"></script>
+<script src="directives/navbar/navbar.js"></script>
+<script src="directives/intro/intro.js"></script>
+<script src="components/poll_search/poll_search.js"></script>
+<script src="components/poll_new/poll_new.js"></script>    
+<script src="components/user_login/user_login.js"></script>
+<script src="components/user_signup/user_signup.js"></script>    
 </body>
 </html>

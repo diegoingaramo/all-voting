@@ -13,14 +13,9 @@
     color: #0B94D8;
 }
 
-.btn {
-    padding: 6px 50px;
-}
-
 .btn-info {
     background-color: #0B94D8;
 }
-
 
 /* default container */
 
@@ -50,8 +45,8 @@
     display: inline-block;
     font-weight: bold;
     font-size: 16px;
+    padding: 6px 50px;
 }
-
 
 /* res container */
 
@@ -60,6 +55,22 @@
 }
 
 /* end default container */
+
+/* signup/login container */
+
+#signup button {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 6px 50px;
+}
+
+#login button {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 6px 50px;
+}
+
+/* end signup/login container */
 
 /* new poll */
 
@@ -83,6 +94,12 @@
 #delete_button,
 #close_button {
     cursor: pointer;
+}
+
+#newPoll button {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 6px 50px;
 }
 
 /* end new poll */
