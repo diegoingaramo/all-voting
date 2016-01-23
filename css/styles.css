@@ -56,6 +56,19 @@
 
 /* end default container */
 
+/* search container */
+
+.search-container{
+    margin-bottom: 15px;
+}
+
+.searched_question {
+    margin-bottom: 10px;
+}
+
+.searched_question .glyphicon {
+    color: #0B94D8;
+}
 /* signup/login container */
 
 #signup button {
@@ -92,7 +105,8 @@
 }
 
 #delete_button,
-#close_button {
+#close_button,
+.searched_question  .glyphicon {
     cursor: pointer;
 }
 
