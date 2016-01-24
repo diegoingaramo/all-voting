@@ -16,26 +16,32 @@
     <!-- Modal Window -->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="pollres-container">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" >
          <h2>{{selectedPoll.question}}</h2>
           <p>These are the votes obtained on each option:</p>            
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Option</th>
-                <th>Text</th>
-                <th># of votes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="option in selectedPoll.options">
-                <td>{{$index}}</td>
-                <td>{{option.text}}</td>
-                <td>{{option.votes}}</td>
-              </tr>
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-success btn-sm" id="view_chart_button">View Chart</button>
+          <div ng-show="viewTable">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Option</th>
+                    <th>Text</th>
+                    <th># of votes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="option in selectedPoll.options">
+                    <td>{{$index}}</td>
+                    <td>{{option.text}}</td>
+                    <td>{{option.votes}}</td>
+                  </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success btn-sm" id="view_chart_button" ng-click="viewPollChart()">View Chart</button>
+          </div>
+          <div ng-show="!viewTable">
+            <div id="chart_div"></div>
+            <button type="button" class="btn btn-info btn-sm" id="view_table_button" ng-click="viewPollTable()">View Table</button>
+          </div>
         </div>
       </div>
     </div>

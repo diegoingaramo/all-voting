@@ -81,10 +81,16 @@
     padding-right: 50px;
 }
 
-#view_chart_button
+#view_chart_button,
+#view_table_button
 {
     padding: 6px 50px; 
     float: right;
+}
+
+#chart_div table {
+    width: auto;
+    margin: 0 auto !important;
 }
 
 
