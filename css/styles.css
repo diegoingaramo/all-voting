@@ -66,15 +66,23 @@
     margin-bottom: 10px;
 }
 
-.searched_question .glyphicon {
+.searched_question .glyphicon-circle-arrow-right {
     color: #0B94D8;
 }
 
-#pollres-container {
+.searched_question .glyphicon-pencil {
+    color: #5cb85c;
+}
+
+
+
+#pollres-container,
+#votepoll-container {
     top: 150px;
 }
 
-#pollres-container .modal-content {
+#pollres-container .modal-content,
+#votepoll-container .modal-content {
     padding-top: 30px;
     padding-bottom: 50px;
     padding-left: 50px;
@@ -82,7 +90,8 @@
 }
 
 #view_chart_button,
-#view_table_button
+#view_table_button,
+#vote_poll_button
 {
     padding: 6px 50px; 
     float: right;

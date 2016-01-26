@@ -30,6 +30,7 @@ var pollSearchController = function ($scope, $routeParams, pollSearchService) {
     $scope.selectedPoll = {};
     $scope.selectedPoll.question = "";
     $scope.selectedPoll.options = [];
+    $scope.newVote = {};
     
     $scope.search = function(){
         $scope.searchResults = pollSearchService.search($scope.searchText);
@@ -70,13 +71,27 @@ var pollSearchController = function ($scope, $routeParams, pollSearchService) {
         
         $scope.viewTable = false;
         
-    }
+    };
+    
+    
+    $scope.viewVotePoll = function(searchResult){
+        $scope.selectedPoll.question = searchResult.question;
+        $scope.selectedPoll.options = pollSearchService.getOptionsByPoll(searchResult.id);
+        $scope.newVote.optionText = "";
+        $scope.newVote.option = 0;
+        $("#votepoll-container").modal();
+    };
     
     $scope.viewPollTable = function(){
         $scope.viewTable = true;
     };
     
-      
+    $scope.votePoll = function(){
+        //alert($scope.newVote.option); DEFAULT 0 - NO VOTE
+    };
+
+    
+  
 };
 
 angular.module('poll.search', ['ngNewRouter']).factory('pollSearchService', ['$http', pollSearchService])
