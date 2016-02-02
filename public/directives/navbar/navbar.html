@@ -12,10 +12,17 @@
           <ul class="nav navbar-nav">
             <li class="active"><a ng-link="/">Home</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
+            
+          <ul class="nav navbar-nav navbar-right" ng-show="isAuthed()">
+            <li><a ng-link="#"><span class="glyphicon glyphicon-user"></span> Welcome, diegoingaramo!</a></li>
+            <li><a ng-link="logout" href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+            
+          <ul class="nav navbar-nav navbar-right" ng-show="!isAuthed()">
             <li><a ng-link="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><a ng-link="login" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          </ul>
+          </ul>    
+            
         </div>
       </div>
 </nav>

@@ -25,8 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 mongoose.connect(config.database); // connect to database
+
 app.set('superSecret', config.secret); // secret variable
 
 app.use('/', routes);

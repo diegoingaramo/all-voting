@@ -1,4 +1,4 @@
-var app = angular.module('appPoll', ['ngNewRouter', 'poll.search','poll.new','user.login','user.signup']).controller('AppController', ['$router', AppController]);
+var app = angular.module('appPoll', ['ngNewRouter', 'poll.search','poll.new','user.login','user.signup']).controller('AppController', ['$scope', '$router', AppController]);
 
 AppController.$routeConfig = [
   { path: '/user/login', component: 'user_login', as:'login' },
@@ -7,4 +7,9 @@ AppController.$routeConfig = [
   { path: '/', component: 'poll_search'}
 ];
 
-function AppController($router) {};
+function AppController($scope, $router) {
+    $scope.isAuthed = function() {
+        return false;
+        //return auth.isAuthed ? auth.isAuthed() : false
+    };
+};
