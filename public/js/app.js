@@ -4,24 +4,55 @@ var authInterceptor = function(API, auth) {
   return {
     // automatically attach Authorization header
     request: function(config) {
+      var token = auth.getToken();
+      if(token) {
+        config.headers.Authorization = 'Bearer ' + token;
+      }
       return config;
     },
 
     // If a token was sent back, save it
     response: function(res) {
+      if(res.data.token) {
+        auth.saveToken(res.data.token);
+      }
       return res;
     },
+      
   }
 };
 
 
 var authService = function($window) {
+    
   var self = this;
 
-  // Add JWT methods here
+  self.parseJwt = function(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse($window.atob(base64));
+  };
+    
+  self.saveToken = function(token) {
+    $window.localStorage['jwtToken'] = token;
+  };
+    
+  self.getToken = function() {
+    return $window.localStorage['jwtToken'];
+  };
     
   self.isAuthed = function(){
-    return false;  
+    var token = self.getToken();
+    if(token) {
+        var params = self.parseJwt(token);
+        return Math.round(new Date().getTime() / 1000) <= params.exp;
+    } else {
+        return false;
+    }
+  };
+    
+  self.logout = function() {
+    $window.localStorage.removeItem('jwtToken');
   };
     
 };
@@ -31,9 +62,21 @@ var userService = function($http, API, auth) {
     
   self.getQuote = function() {
     return $http.get(API + '/auth/quote')
-  }
+  };
 
-  // add authentication methods here
+  self.register = function(email, password) {
+  return $http.post('user/auth/register', {
+      email: email,
+      password: password
+    })
+  };
+    
+  self.login = function(email, password) {
+      return $http.post('user/auth/login', {
+          email: email,
+          password: password
+        })
+  };
 
 };
 
@@ -51,13 +94,13 @@ AppController.$routeConfig = [
 
 function AppController($scope, $router, user, auth) {
     
-  $scope.login = function() {
-    user.login(self.username, self.password)
+  $scope.login = function(email, password) {
+    user.login(email, password)
       .then(handleRequest, handleRequest)
   };
   
-  $scope.register = function() {
-    user.register(self.username, self.password)
+  $scope.register = function(email, password) {
+    user.register(email, password)
       .then(handleRequest, handleRequest)
   };
   
