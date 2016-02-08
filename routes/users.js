@@ -3,26 +3,36 @@ var express = require('express');
 /* token service */
 var token_service = require('../service/token_service.js');
 
+var User = require('../model/user'); // get our mongoose model
+
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-
 router.post('/signup', function(req, res) {
     
-    var user = new User({
-        email: req.body.email,
-        password: req.body.password
-    });
+    // find the user
+    User.findOne({email: req.body.email}, function(err, user) {
+        
+        if (err) throw err;
 
-    user.save(function(err){
-        return res
-            .status(200)
-            .send({token: token_service.createToken(user)});
+        if (!user) {
+    
+            var user = new User({
+                email: req.body.email,
+                password: req.body.password
+            });
+
+            user.save(function(err){
+                return res
+                    .status(200)
+                    .send({success: true, token: token_service.createToken(user)});
+            });
+            
+        }else {
+             res.json({ success: false, message: 'User exists.' });
+        }
     });
+    
 });
 
 

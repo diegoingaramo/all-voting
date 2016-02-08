@@ -60,10 +60,6 @@ var authService = function($window) {
 var userService = function($http, API, auth) {
   var self = this;
     
-  self.getQuote = function() {
-    return $http.get(API + '/auth/quote')
-  };
-
   self.register = function(email, password) {
   return $http.post('user/auth/register', {
       email: email,
@@ -95,20 +91,13 @@ AppController.$routeConfig = [
 function AppController($scope, $router, user, auth) {
     
   $scope.login = function(email, password) {
-    user.login(email, password)
-      .then(handleRequest, handleRequest)
+    user.login(email, password);
   };
   
   $scope.register = function(email, password) {
-    user.register(email, password)
-      .then(handleRequest, handleRequest)
+    user.register(email, password);
   };
-  
-  $scope.getQuote = function() {
-    user.getQuote()
-      .then(handleRequest, handleRequest)
-  };
-  
+   
   $scope.logout = function() {
     auth.logout && auth.logout()
   };
