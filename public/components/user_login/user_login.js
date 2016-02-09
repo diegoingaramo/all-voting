@@ -1,4 +1,19 @@
 angular.module('user.login', ['ngNewRouter'])
-  .controller('UserLoginController', ['$routeParams', function ($scope, $routeParams) {
-    //this.name = 'Friend';
+  .controller('UserLoginController', ['$scope','user','$location','$routeParams', function ($scope,user,$location, $routeParams) {
+      
+    //model initialization
+    $scope.email = "";
+    $scope.username = "";
+      
+    $scope.login = function() {
+    user.login($scope.email, $scope.password).then(function(result) {
+       if (result.data.success)
+           $location.path('/');
+        else
+            alert(result.data.message);
+       }, function(reason) {
+        alert("Error: " + reason);
+    });
+  };
+      
   }]);

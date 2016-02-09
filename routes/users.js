@@ -10,29 +10,34 @@ var router = express.Router();
 /* GET users listing. */
 router.post('/signup', function(req, res) {
     
-    // find the user
-    User.findOne({email: req.body.email}, function(err, user) {
+    if (req.body.password != req.body.rpassword){
+        res.json({ success: false, message: 'Passwords don\'t match.' });
+    } else{
         
-        if (err) throw err;
+        // find the user
+        User.findOne({email: req.body.email}, function(err, user) {
 
-        if (!user) {
-    
-            var user = new User({
-                email: req.body.email,
-                password: req.body.password
-            });
+            if (err) throw err;
 
-            user.save(function(err){
-                return res
-                    .status(200)
-                    .send({success: true, token: token_service.createToken(user)});
-            });
-            
-        }else {
-             res.json({ success: false, message: 'User exists.' });
-        }
-    });
-    
+            if (!user) {
+
+                var user = new User({
+                    email: req.body.email,
+                    password: req.body.password
+                });
+
+                user.save(function(err){
+                    return res
+                        .status(200)
+                        .send({success: true, token: token_service.createToken(user)});
+                });
+
+            }else {
+                 res.json({ success: false, message: 'User exists.' });
+            }
+        });
+        
+    }
 });
 
 

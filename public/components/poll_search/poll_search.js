@@ -24,6 +24,8 @@ var pollSearchService = function($http) {
 
 var pollSearchController = function ($scope, $routeParams, pollSearchService) {
       
+    
+    //Model Initialization
     $scope.searchText = "";
     $scope.searchResults = [];
     $scope.viewTable = true;

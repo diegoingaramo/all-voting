@@ -1,6 +1,6 @@
 /* Authentication services */
 
-var authInterceptor = function(API, auth) {
+var authInterceptor = function(auth) {
   return {
     // automatically attach Authorization header
     request: function(config) {
@@ -57,21 +57,33 @@ var authService = function($window) {
     
 };
 
-var userService = function($http, API, auth) {
+var userService = function($http, auth) {
+    
   var self = this;
     
-  self.register = function(email, password) {
-  return $http.post('user/auth/register', {
+  self.user = {};
+    
+  self.signup = function(email, password, rpassword) {
+  return $http.post('users/signup', {
       email: email,
-      password: password
-    })
+      password: password,
+      rpassword: rpassword
+    }).then(function(result) {
+          if (result.data.success)
+            self.user.username = email;
+          return result;
+      });
   };
     
   self.login = function(email, password) {
-      return $http.post('user/auth/login', {
+      return $http.post('users/login', {
           email: email,
           password: password
-        })
+      }).then(function(result) {
+          if (result.data.success)
+            self.user.username = email;
+          return result;
+      });
   };
 
 };
@@ -88,41 +100,29 @@ AppController.$routeConfig = [
   { path: '/', component: 'poll_search'}
 ];
 
-function AppController($scope, $router, user, auth) {
+function AppController($scope, $router, user, auth, $location) {
     
-  $scope.login = function(email, password) {
-    user.login(email, password);
-  };
+  $scope.user = user.user;
   
-  $scope.register = function(email, password) {
-    user.register(email, password);
-  };
-   
+  
   $scope.logout = function() {
-    auth.logout && auth.logout()
+    auth.logout && auth.logout();
+    $location.path('/');
   };
     
   $scope.isAuthed = function() {
     return auth.isAuthed ? auth.isAuthed() : false
   };
     
-    
-  function handleRequest(res) {
-    var token = res.data ? res.data.token : null;
-    if(token) { console.log('JWT:', token); }
-    self.message = res.data.message;
-  }
-    
 };
 
 /* End main controller definition */
 
-var app = angular.module('appPoll', ['ngNewRouter', 'poll.search','poll.new','user.login','user.signup']).controller('AppController', ['$scope', '$router', 'user', 'auth', AppController]);
+var app = angular.module('appPoll', ['ngNewRouter', 'poll.search','poll.new','user.login','user.signup']).controller('AppController', ['$scope', '$router', 'user', 'auth', '$location', AppController]);
 
 app.factory('authInterceptor', authInterceptor)
 .service('user', userService)
 .service('auth', authService)
-.constant('API', 'http://test-routes.herokuapp.com')
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 });
