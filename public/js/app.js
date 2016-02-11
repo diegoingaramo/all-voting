@@ -44,8 +44,9 @@ var authService = function($window) {
   self.isAuthed = function(){
     var token = self.getToken();
     if(token) {
-        var params = self.parseJwt(token);
-        return Math.round(new Date().getTime() / 1000) <= params.exp;
+        return true;
+        //var params = self.parseJwt(token);
+        //return Math.round(new Date().getTime() / 1000) <= params.exp;
     } else {
         return false;
     }
@@ -53,15 +54,14 @@ var authService = function($window) {
     
   self.logout = function() {
     $window.localStorage.removeItem('jwtToken');
+    $window.localStorage.removeItem('user');
   };
     
 };
 
-var userService = function($http, auth) {
+var userService = function($http, auth, $window) {
     
   var self = this;
-    
-  self.user = {};
     
   self.signup = function(email, password, rpassword) {
   return $http.post('users/signup', {
@@ -69,8 +69,10 @@ var userService = function($http, auth) {
       password: password,
       rpassword: rpassword
     }).then(function(result) {
-          if (result.data.success)
-            self.user.username = email;
+          if (result.data.success){
+             $window.localStorage.setItem('user',JSON.stringify({username: email}));
+             //$window.localStorage['user'] = JSON.stringify({username: email});
+          }
           return result;
       });
   };
@@ -80,16 +82,43 @@ var userService = function($http, auth) {
           email: email,
           password: password
       }).then(function(result) {
-          if (result.data.success)
-            self.user.username = email;
+          if (result.data.success){
+            $window.localStorage.setItem('user',JSON.stringify({username: email}));
+  //          $window.localStorage.setItem('user',JSON.stringify({username: email}));
+          }
           return result;
       });
   };
-
+    
+    
+  self.currentUser = function() {
+    if ($window.localStorage.getItem('user'))
+      return JSON.parse($window.localStorage.getItem('user'));
+    else
+      return {};
+  };
+    
 };
 
 
 /* End authentication services */
+
+/* Poll Service */
+
+var pollService = function($http) {
+    
+  var self = this;
+    
+  self.getPollsByUser = function(email) {
+  return $http.post('polls/getPollsByUser', {
+      email: email
+    });
+  };
+    
+};
+
+
+/* End Poll Service */
 
 /* Main controller definition */
 
@@ -102,9 +131,6 @@ AppController.$routeConfig = [
 
 function AppController($scope, $router, user, auth, $location) {
     
-  $scope.user = user.user;
-  
-  
   $scope.logout = function() {
     auth.logout && auth.logout();
     $location.path('/');
@@ -113,6 +139,11 @@ function AppController($scope, $router, user, auth, $location) {
   $scope.isAuthed = function() {
     return auth.isAuthed ? auth.isAuthed() : false
   };
+    
+  $scope.getUser = function(){
+      return user.currentUser();
+  }
+  
     
 };
 
@@ -123,6 +154,7 @@ var app = angular.module('appPoll', ['ngNewRouter', 'poll.search','poll.new','us
 app.factory('authInterceptor', authInterceptor)
 .service('user', userService)
 .service('auth', authService)
+.service('poll', pollService)
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 });

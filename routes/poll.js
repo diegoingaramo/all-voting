@@ -3,11 +3,14 @@ var express = require('express');
 var Poll = require('../model/poll'); // get our mongoose model
 var User = require('../model/user'); // get our mongoose model
 
+/* token service */
+var token_service = require('../service/token_service.js');
+
 
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/getPollsByUser', function(req, res) {
+router.post('/getPollsByUser', token_service.isAuthenticated, function(req, res) {
     
     if (!req.body.email){
         res.json({ success: false, message: 'Poll is missing.' });

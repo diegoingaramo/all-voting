@@ -9,8 +9,10 @@ angular.module('user.signup', ['ngNewRouter'])
       
     $scope.signup = function() {
         user.signup($scope.email, $scope.password, $scope.rpassword).then(function(result) {
-            if (result.data.success)
+            if (result.data.success){
+                //$scope.user = user.currentUser();
                 $location.path('/');
+            }
             else
                 alert(result.data.message);
        }, function(reason) {

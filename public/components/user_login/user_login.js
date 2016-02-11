@@ -7,8 +7,10 @@ angular.module('user.login', ['ngNewRouter'])
       
     $scope.login = function() {
     user.login($scope.email, $scope.password).then(function(result) {
-       if (result.data.success)
+       if (result.data.success){
+           //$scope.$parent.user = user.currentUser();
            $location.path('/');
+       }
         else
             alert(result.data.message);
        }, function(reason) {

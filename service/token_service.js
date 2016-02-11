@@ -14,12 +14,17 @@ exports.createToken = function(user) {
 exports.isAuthenticated = function(req, res, next){
 
   // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  //var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var bearerHeader = req.headers["authorization"];
 
   // decode token
-  if (token) {  
+  if (typeof bearerHeader !== 'undefined') {
+      
+    var bearer = bearerHeader.split(" ");
+    bearerToken = bearer[1];
+    
     // verifies secret and checks exp
-    jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
+    jwt.verify(bearerToken, app.get('superSecret'), function(err, decoded) {      
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
@@ -41,3 +46,19 @@ exports.isAuthenticated = function(req, res, next){
   }
     
 };
+
+
+/*exports.ensureAuthorized = function(req, res, next) {
+    
+    var bearerToken;
+    var bearerHeader = req.headers["authorization"];
+    if (typeof bearerHeader !== 'undefined') {
+        var bearer = bearerHeader.split(" ");
+        bearerToken = bearer[1];
+        req.token = bearerToken;
+        next();
+    } else {
+        res.send(403);
+    }
+    
+};*/
