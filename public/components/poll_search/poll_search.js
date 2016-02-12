@@ -4,7 +4,7 @@ var pollSearchService = function($http) {
 
     var search = function(searchText) {
       return $http.post('polls/search', {
-        text: searchText
+        searchtext: searchText
       });
     };
     

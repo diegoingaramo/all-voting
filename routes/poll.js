@@ -46,11 +46,12 @@ router.post('/getPollsByUser', token_service.isAuthenticated, function(req, res)
 router.post('/search', function(req, res) {
     
     var searchText = req.body.searchtext;
-    var searchTextRegEx = new RegExp("/.*" + searchText + ".*/","ig");
+    var searchTextRegEx = new RegExp(".*" + searchText + ".*","gi");
     
     //search for user's polls
     //Poll.find({question:{ $regex: searchTextRegEx, $options: 'gi' }},function(err, polls) {
     Poll.find({question:{$regex: searchTextRegEx}},function(err, polls) {
+    //Poll.find({question:{ $regex: /.*how.*/, $options: 'gi' }},function(err, polls) {
                      
     if (err) throw err;
                      
