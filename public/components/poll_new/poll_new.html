@@ -14,7 +14,7 @@
                             <div class="col-sm-offset-2 col-sm-8">
                                 <div ng-repeat="newChoice in newChoices">
                                         <div class="form-inline form-group">
-                                            <input type="text" class="form-control" placeholder="{{newChoice.placeholder}}" aria-describedby="sizing-addon2" ng-model="newChoice.question">                                        
+                                            <input type="text" class="form-control" placeholder="{{newChoice.placeholder}}" aria-describedby="sizing-addon2" ng-model="newChoice.description">                                        
                                             <span class="glyphicon glyphicon-trash" ng-click="deleteChoice($index)" id="delete_button"></span>
                                         </div>                                         
                                 </div>
@@ -24,5 +24,5 @@
                             <strong>Ops !</strong> You must have at least two choices... <i id="close_button" ng-click="hideMessage()" class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
                         </div>
                         <button type="button" class="btn btn-info btn-sm" ng-click="addChoice()">More Options</button>
-                        <button type="button" class="btn btn-success btn-sm">Submit</button>
+                        <button type="button" class="btn btn-success btn-sm" ng-click="insertPoll()">Submit</button>
 </section>

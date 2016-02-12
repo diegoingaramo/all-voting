@@ -1,0 +1,80 @@
+    <!-- search result -->
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-8">
+            <div ng-repeat="poll in polls">
+                <h4 class=" searched_question"><i> {{poll.question}}</i> <i class="glyphicon glyphicon-pencil" ng-click="viewVotePoll(poll)" title="Vote"></i> <i class="glyphicon glyphicon-circle-arrow-right" ng-click="viewPollResult(poll)" title="View poll statistics"></i></h4>
+            </div>            
+        </div>
+        <div class="alert alert-warning" ng-show="polls.length == 0">
+            <!--<strong>Ops !</strong>--> Nothing to show... 
+        </div>
+    </div>
+    
+    <!-- View Modal Window -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="pollres-container">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" >
+         <h2>{{selectedPoll.question}}</h2>
+          <p>These are the votes obtained on each option:</p>            
+          <div ng-show="viewTable">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Option</th>
+                    <th>Text</th>
+                    <th># of votes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="option in selectedPoll.options">
+                    <td>{{$index}}</td>
+                    <td>{{option.text}}</td>
+                    <td>{{option.votes}}</td>
+                  </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success btn-sm" id="view_chart_button" ng-click="viewPollChart()">View Chart</button>
+          </div>
+          <div ng-show="!viewTable">
+            <div id="chart_div"></div>
+            <button type="button" class="btn btn-info btn-sm" id="view_table_button" ng-click="viewPollTable()">View Table</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal Window -->
+    
+    <!-- Vote Poll Modal Window -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="votepoll-container">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" >
+         <h2>{{selectedPoll.question}}</h2>
+          <p>These are the possible options:</p>            
+          <div ng-show="viewTable">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Option</th>
+                    <th>Text</th>
+                    <th>Vote</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="option in selectedPoll.options">
+                    <td>{{$index}}</td>
+                    <td>{{option.text}}</td>
+                    <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.option" value="{{option.id}}"></label></div></td>
+                  </tr>
+                  <tr>
+                    <td>New</td>
+                    <td><input type="text" class="form-control" placeholder="Insert new option" name="optradio" ng-model="newVote.optionText"></td>
+                    <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.option" value="new"></label></div></td>
+                  </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success btn-sm" id="vote_poll_button" ng-click="votePoll()">Vote</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal Window -->

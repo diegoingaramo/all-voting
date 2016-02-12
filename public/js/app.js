@@ -110,9 +110,16 @@ var pollService = function($http) {
   var self = this;
     
   self.getPollsByUser = function(email) {
-  return $http.post('polls/getPollsByUser', {
-      email: email
-    });
+      return $http.post('polls/getPollsByUser', {
+          email: email
+      });
+  };
+    
+  self.new = function(poll) {
+      return $http.post('polls/new', {
+          question: poll.question,
+          options: poll.options
+      });
   };
     
 };
@@ -126,7 +133,8 @@ AppController.$routeConfig = [
   { path: '/user/login', component: 'user_login', as:'login' },
   { path: '/user/signup', component: 'user_signup', as:'signup' }, 
   { path: '/poll/new', component: 'poll_new', as:'pollnew' }, 
-  { path: '/', component: 'poll_search'}
+  { path: '/', component: 'poll_search'},
+  { path: '/user/mypolls', component: 'user_mypolls', as: 'mypolls'}
 ];
 
 function AppController($scope, $router, user, auth, $location) {
@@ -149,7 +157,7 @@ function AppController($scope, $router, user, auth, $location) {
 
 /* End main controller definition */
 
-var app = angular.module('appPoll', ['ngNewRouter', 'poll.search','poll.new','user.login','user.signup']).controller('AppController', ['$scope', '$router', 'user', 'auth', '$location', AppController]);
+var app = angular.module('appPoll', ['ngNewRouter', 'poll.search', 'poll.new', 'user.login', 'user.signup', 'user.mypolls']).controller('AppController', ['$scope', '$router', 'user', 'auth', '$location', AppController]);
 
 app.factory('authInterceptor', authInterceptor)
 .service('user', userService)

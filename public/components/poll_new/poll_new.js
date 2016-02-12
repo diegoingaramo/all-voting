@@ -1,23 +1,27 @@
 /* Controller */
 
-var pollNewController = function($scope, $routeParams) {
+var pollNewController = function($scope, $routeParams, poll) {
 
     /* Model Initialization */
-    $scope.newQuestion = "";
-    $scope.newQuestionPlaceholder = "Who will win the NBA championship this year?";
-    $scope.newChoices = [];
-    
-    $scope.newChoices.push({placeholder: "Cleveland Cavaliers", question: ""});
-    $scope.newChoices.push({placeholder: "San Antonio Spurs", question: ""});
-    
-    $scope.showMaxSizeError = false;
+    $scope.init = function(){
+        
+        $scope.newQuestion = "";
+        $scope.newQuestionPlaceholder = "Who will win the NBA championship this year?";
+        $scope.newChoices = [];
+
+        $scope.newChoices.push({placeholder: "Cleveland Cavaliers", description: "", votes: 0});
+        $scope.newChoices.push({placeholder: "San Antonio Spurs", description: "", votes: 0});
+
+        $scope.showMaxSizeError = false;
+
+    };
     
     $scope.addChoice = function () {
         
         if ($scope.newChoices.length >= 2)
             $scope.showMaxSizeError = false;
         
-          $scope.newChoices.push({placeholder: "Please enter the new choice", question: ""});
+          $scope.newChoices.push({placeholder: "Please enter the new choice", description: "", votes: 0});
     };
     
     $scope.deleteChoice = function ( choiceID ) {
@@ -32,9 +36,28 @@ var pollNewController = function($scope, $routeParams) {
     
     $scope.hideMessage = function(){
         $scope.showMaxSizeError = false;
-    }
+    };
+    
+    $scope.insertPoll = function(){
+        var newPoll = {};
+        newPoll.question = $scope.newQuestion;
+        newPoll.options = $scope.newChoices;
+        //console.log(newPoll);
+        poll.new(newPoll).then(function(result) {
+           if (result.data.success){
+               alert("Poll Added !");
+               $scope.init();
+           }
+           else
+                alert(result.data.message);
+           }, function(reason) {
+            alert("Error: " + reason);
+        }); 
+    };
+    
+    $scope.init();
 
 };
 
 angular.module('poll.new', ['ngNewRouter'])
-  .controller('PollNewController', ['$scope', pollNewController]);
+  .controller('PollNewController', ['$scope', '$routeParams', 'poll', pollNewController]);
