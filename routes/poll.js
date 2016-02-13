@@ -62,35 +62,66 @@ router.post('/search', function(req, res) {
 
 
 /* POST users listing. */
-router.post('/getByID', token_service.isAuthenticated, function(req, res) {
+router.post('/getByID', function(req, res) {
     
     var pollID = req.body.pollID;
-    var username = req.body.username;
     
-    // find the user
-    User.find({email: username}, function(err, user) {
-
-        if (err) throw err;
-
-        if (!user) {
-                    
-            res.json({ success: false, message: 'User doesn\'t exist.' });
-
-        }else {
-             //search for user's polls
-             Poll.findOne({owner:user._id, _id: pollID}, function(err, poll) {
+     //search for user's polls
+     Poll.findOne({_id: pollID}, function(err, poll) {
                      
-                 if (err) throw err;
+         if (err) throw err;
                      
-                 res
-                    .status(200)
-                    .send({success: true, poll: poll});
-             });
-        }
-    });
-    
+        res
+            .status(200)
+            .send({success: true, poll: poll});
+     });
 });
 
+/* POST vote poll. */
+router.post('/vote', function(req, res) {
+    
+    var pollID = req.body.pollID;
+    var optionID = req.body.optionID;
+    var newOptionText = req.body.newOptionText;
+    
+    //update existing option
+    if (optionID != 0){
+        
+        Poll.update({ "options._id": optionID }, {$inc : {"options.$.votes" : 1}},
+                 
+            function(err) {
+
+                if (err) throw err;
+
+                res
+                    .status(200)
+                    .send({success: true});
+
+         });
+        
+    }else{
+        
+        //add new poll option
+        Poll.findOne({_id: pollID}, function(err, poll) {
+                     
+            if (err) throw err;
+
+            // create a comment
+            poll.options.push({ description: newOptionText, votes: 1 });
+
+            poll.save(function (err) {
+                if (err) return handleError(err);
+                return res
+                        .status(200)
+                        .send({success: true});
+            });
+            
+        });
+        
+    }
+    
+    
+});
 
 /* POST users listing. */
 router.post('/new', token_service.isAuthenticated, function(req, res) {

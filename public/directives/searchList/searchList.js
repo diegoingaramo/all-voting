@@ -4,26 +4,25 @@ app.directive('searchlist', function() {
         
     /* Model Initialization */
     $scope.selectedPoll = {};
-    $scope.selectedPoll.question = "";
-    $scope.selectedPoll.options = [];
+    //$scope.selectedPoll.question = "";
+    //$scope.selectedPoll.options = [];
     $scope.newVote = {};
     $scope.viewTable = true;
         
         
-    $scope.viewVotePoll = function(poll){
+    $scope.viewVotePoll = function(selectedPoll){
         
-        $scope.selectedPoll.question = poll.question;
+        //$scope.selectedPoll.question = selectedPoll.question;
         
-        alert(poll._id);
-        alert($scope.getUser().username);
-        
-        pollSearchService.getPollByID(poll._id,$scope.getUser().username).then(function(result) {
+        pollSearchService.getPollByID(selectedPoll._id).then(function(result) {
             
         if (result.data.success){
             
-            $scope.selectedPoll.options = result.data.options;
+            //$scope.selectedPoll.options = result.data.poll.options;
+            $scope.selectedPoll = result.data.poll;
             $scope.newVote.optionText = "";
-            $scope.newVote.option = 0;
+            $scope.newVote.optionIndex = -2;
+            $scope.viewTable = true;
             $("#votepoll-container").modal();
             
         }
@@ -38,13 +37,14 @@ app.directive('searchlist', function() {
         
     $scope.viewPollResult = function(selectedPoll){
         
-        $scope.selectedPoll.question = selectedPoll.question;
+        //$scope.selectedPoll.question = selectedPoll.question;
         
-        pollSearchService.getPollByID(selectedPoll._id,$scope.$parent.getUser().username).then(function(result) {
+        pollSearchService.getPollByID(selectedPoll._id).then(function(result) {
             
         if (result.data.success){
             
-            $scope.selectedPoll.options = result.data.poll.options;
+            //$scope.selectedPoll.options = result.data.poll.options;
+            $scope.selectedPoll = result.data.poll;
             $scope.viewTable = true;
             $("#pollres-container").modal();
             
@@ -93,7 +93,35 @@ app.directive('searchlist', function() {
     };
         
     $scope.votePoll = function(){
-        //alert($scope.newVote.option); DEFAULT 0 - NO VOTE
+        //$scope.selectedPoll.options[$scope.newVote.optionIndex].votes++;
+        //console.log($scope.selectedPoll.options[$scope.newVote.optionIndex]);
+        
+        if ($scope.newVote.optionIndex == -2){
+            alert("You must select an option");
+            return;
+        }
+        
+        if ($scope.newVote.optionIndex == -1 && $scope.newVote.optionText == ""){
+            alert("You must enter the new option's text");
+            return;
+        }
+            
+        var optionID = ($scope.newVote.optionIndex == -1)?0:$scope.selectedPoll.options[$scope.newVote.optionIndex]._id;
+        
+        poll.vote(optionID, $scope.newVote.optionText,$scope.selectedPoll._id).then(function (result){
+            
+            if (result.data.success){
+            
+                alert("Your vote has been registered !");
+                $("#votepoll-container").modal('hide');
+            
+            }
+            else
+                alert(result.data.message);
+            
+        }, function(reason) {
+            alert("Error: " + reason);
+        });
     };
 
 

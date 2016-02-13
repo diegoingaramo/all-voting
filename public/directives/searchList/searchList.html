@@ -63,12 +63,12 @@
                   <tr ng-repeat="option in selectedPoll.options">
                     <td>{{$index}}</td>
                     <td>{{option.description}}</td>
-                    <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.option" value="{{option.id}}"></label></div></td>
+                    <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.optionIndex" value="{{$index}}"></label></div></td>
                   </tr>
                   <tr>
                     <td>New</td>
                     <td><input type="text" class="form-control" placeholder="Insert new option" name="optradio" ng-model="newVote.optionText"></td>
-                    <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.option" value="new"></label></div></td>
+                    <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.optionIndex" value="-1"></label></div></td>
                   </tr>
                 </tbody>
             </table>

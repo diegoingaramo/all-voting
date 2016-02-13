@@ -122,6 +122,14 @@ var pollService = function($http) {
       });
   };
     
+  self.vote = function(optionID,newOptionText,pollID) {
+      return $http.post('polls/vote', {
+          optionID: optionID,
+          newOptionText: newOptionText,
+          pollID: pollID
+      });
+  };
+    
 };
 
 

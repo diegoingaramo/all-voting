@@ -8,10 +8,9 @@ var pollSearchService = function($http) {
       });
     };
     
-    var getPollByID = function(pollID,username) {
+    var getPollByID = function(pollID) {
       return $http.post('polls/getByID', {
-        pollID: pollID,
-        username:username
+        pollID: pollID
       });
     };
     
