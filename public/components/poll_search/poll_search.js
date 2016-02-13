@@ -8,14 +8,16 @@ var pollSearchService = function($http) {
       });
     };
     
-    var getOptionsByPoll = function(pollID) {
-      return [{id: 2, text: 'Yes', votes: 124}, {id: 5, text: 'No', votes: 87},
-             {id: 9, text: "I don't know", votes: 23}];
+    var getPollByID = function(pollID,username) {
+      return $http.post('polls/getByID', {
+        pollID: pollID,
+        username:username
+      });
     };
-   
+    
     return {
       search: search,
-      getOptionsByPoll: getOptionsByPoll
+      getPollByID: getPollByID
     };
     
  };

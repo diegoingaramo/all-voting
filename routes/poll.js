@@ -49,15 +49,44 @@ router.post('/search', function(req, res) {
     var searchTextRegEx = new RegExp(".*" + searchText + ".*","gi");
     
     //search for user's polls
-    //Poll.find({question:{ $regex: searchTextRegEx, $options: 'gi' }},function(err, polls) {
-    Poll.find({question:{$regex: searchTextRegEx}},function(err, polls) {
-    //Poll.find({question:{ $regex: /.*how.*/, $options: 'gi' }},function(err, polls) {
+    Poll.find({question:{$regex: searchTextRegEx}},'question', function(err, polls) {
                      
-    if (err) throw err;
+        if (err) throw err;
+
+        res
+            .status(200)
+            .send({success: true, polls: polls});
+    });
+    
+});
+
+
+/* POST users listing. */
+router.post('/getByID', token_service.isAuthenticated, function(req, res) {
+    
+    var pollID = req.body.pollID;
+    var username = req.body.username;
+    
+    // find the user
+    User.find({email: username}, function(err, user) {
+
+        if (err) throw err;
+
+        if (!user) {
+                    
+            res.json({ success: false, message: 'User doesn\'t exist.' });
+
+        }else {
+             //search for user's polls
+             Poll.findOne({owner:user._id, _id: pollID}, function(err, poll) {
                      
-    res
-        .status(200)
-        .send({success: true, polls: polls});
+                 if (err) throw err;
+                     
+                 res
+                    .status(200)
+                    .send({success: true, poll: poll});
+             });
+        }
     });
     
 });

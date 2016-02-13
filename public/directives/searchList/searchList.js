@@ -10,19 +10,52 @@ app.directive('searchlist', function() {
     $scope.viewTable = true;
         
         
-    $scope.viewVotePoll = function(searchResult){
-        $scope.selectedPoll.question = searchResult.question;
-        $scope.selectedPoll.options = pollSearchService.getOptionsByPoll(searchResult.id);
-        $scope.newVote.optionText = "";
-        $scope.newVote.option = 0;
-        $("#votepoll-container").modal();
+    $scope.viewVotePoll = function(poll){
+        
+        $scope.selectedPoll.question = poll.question;
+        
+        alert(poll._id);
+        alert($scope.getUser().username);
+        
+        pollSearchService.getPollByID(poll._id,$scope.getUser().username).then(function(result) {
+            
+        if (result.data.success){
+            
+            $scope.selectedPoll.options = result.data.options;
+            $scope.newVote.optionText = "";
+            $scope.newVote.option = 0;
+            $("#votepoll-container").modal();
+            
+        }
+        else
+            alert(result.data.message);
+            
+        }, function(reason) {
+            alert("Error: " + reason);
+        });
+        
     };
         
-    $scope.viewPollResult = function(searchResult){
-        $scope.selectedPoll.question = searchResult.question;
-        $scope.selectedPoll.options = pollSearchService.getOptionsByPoll(searchResult.id);
-        $scope.viewTable = true;
-        $("#pollres-container").modal();
+    $scope.viewPollResult = function(selectedPoll){
+        
+        $scope.selectedPoll.question = selectedPoll.question;
+        
+        pollSearchService.getPollByID(selectedPoll._id,$scope.$parent.getUser().username).then(function(result) {
+            
+        if (result.data.success){
+            
+            $scope.selectedPoll.options = result.data.poll.options;
+            $scope.viewTable = true;
+            $("#pollres-container").modal();
+            
+        }
+        else
+            alert(result.data.message);
+            
+        }, function(reason) {
+            alert("Error: " + reason);
+        });
+        
     };
         
     $scope.viewPollChart = function(){
@@ -34,7 +67,7 @@ app.directive('searchlist', function() {
         var dataRows = [];
         
         $scope.selectedPoll.options.forEach(function(element, index, array){
-            dataRows.push([element.text,element.votes]);
+            dataRows.push([element.description,element.votes]);
         });
         
         data.addRows(dataRows);

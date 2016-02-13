@@ -28,7 +28,7 @@
                 <tbody>
                   <tr ng-repeat="option in selectedPoll.options">
                     <td>{{$index}}</td>
-                    <td>{{option.text}}</td>
+                    <td>{{option.description}}</td>
                     <td>{{option.votes}}</td>
                   </tr>
                 </tbody>
@@ -62,7 +62,7 @@
                 <tbody>
                   <tr ng-repeat="option in selectedPoll.options">
                     <td>{{$index}}</td>
-                    <td>{{option.text}}</td>
+                    <td>{{option.description}}</td>
                     <td><div class="radio"><label><input type="radio" name="optradio" ng-model="newVote.option" value="{{option.id}}"></label></div></td>
                   </tr>
                   <tr>
