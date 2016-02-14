@@ -26,10 +26,10 @@ router.post('/signup', function(req, res) {
                     password: req.body.password
                 });
 
-                user.save(function(err){
+                user.save(function(err,user){
                     return res
                         .status(200)
-                        .send({success: true, token: token_service.createToken(user)});
+                        .send({success: true, token: token_service.createToken(user), userID: user._id});
                 });
 
             }else {
@@ -68,7 +68,8 @@ router.post('/login', function(req, res) {
         res.json({
           success: true,
           message: 'Enjoy your token!',
-          token: token
+          token: token,
+          userID: user._id
         });
       }   
 

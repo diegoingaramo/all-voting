@@ -1,6 +1,6 @@
 app.directive('searchlist', function() {
     
-    var controller = ['$scope','user', 'poll','pollSearchService', function ($scope, user, poll, pollSearchService) {
+    var controller = ['$scope','poll','pollSearchService','user','$filter', function ($scope, poll, pollSearchService, user, $filter) {
         
     /* Model Initialization */
     $scope.selectedPoll = {};
@@ -38,6 +38,8 @@ app.directive('searchlist', function() {
     $scope.viewPollResult = function(selectedPoll){
         
         //$scope.selectedPoll.question = selectedPoll.question;
+        
+        //console.log($scope.polls);
         
         pollSearchService.getPollByID(selectedPoll._id).then(function(result) {
             
@@ -92,9 +94,25 @@ app.directive('searchlist', function() {
         $scope.viewTable = true;
     };
         
+    $scope.removePoll = function(selectedPoll){
+        
+        poll.remove(selectedPoll._id, user.currentUser().username).then(function (result){
+            
+            if (result.data.success){
+            
+                alert("Your poll has been deleted !");
+                $scope.polls = $filter('findobj')($scope.polls, selectedPoll);
+            
+            }
+            else
+                alert(result.data.message);
+            
+        }, function(reason) {
+            alert("Error: " + reason);
+        });
+    };  
+        
     $scope.votePoll = function(){
-        //$scope.selectedPoll.options[$scope.newVote.optionIndex].votes++;
-        //console.log($scope.selectedPoll.options[$scope.newVote.optionIndex]);
         
         if ($scope.newVote.optionIndex == -2){
             alert("You must select an option");
@@ -123,6 +141,10 @@ app.directive('searchlist', function() {
             alert("Error: " + reason);
         });
     };
+        
+    $scope.showPoll = function(poll){
+        return $scope.$parent.isAuthed() && poll.ownerEmail == user.currentUser().username;
+    }
 
 
         

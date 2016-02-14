@@ -71,7 +71,6 @@ var userService = function($http, auth, $window) {
     }).then(function(result) {
           if (result.data.success){
              $window.localStorage.setItem('user',JSON.stringify({username: email}));
-             //$window.localStorage['user'] = JSON.stringify({username: email});
           }
           return result;
       });
@@ -84,7 +83,6 @@ var userService = function($http, auth, $window) {
       }).then(function(result) {
           if (result.data.success){
             $window.localStorage.setItem('user',JSON.stringify({username: email}));
-  //          $window.localStorage.setItem('user',JSON.stringify({username: email}));
           }
           return result;
       });
@@ -115,10 +113,11 @@ var pollService = function($http) {
       });
   };
     
-  self.new = function(poll) {
+  self.new = function(poll,email) {
       return $http.post('polls/new', {
           question: poll.question,
-          options: poll.options
+          options: poll.options,
+          email: email
       });
   };
     
@@ -129,6 +128,13 @@ var pollService = function($http) {
           pollID: pollID
       });
   };
+    
+  self.remove = function(pollID,email) {
+      return $http.post('polls/remove', {
+          pollID: pollID,
+          email: email
+      });
+  };    
     
 };
 
@@ -173,4 +179,16 @@ app.factory('authInterceptor', authInterceptor)
 .service('poll', pollService)
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
+}).filter('findobj', function() {
+
+  return function(list, obj) {
+
+    return list.filter(function(l) {
+      if (obj._id == l._id) 
+        return false;
+      else
+        return true;
+    });
+  };
+    
 });

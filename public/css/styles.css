@@ -74,6 +74,10 @@
     color: #5cb85c;
 }
 
+.searched_question .glyphicon-remove {
+    color: red;
+}
+
 
 
 #pollres-container,

@@ -43,7 +43,7 @@ var pollNewController = function($scope, $routeParams, poll) {
         newPoll.question = $scope.newQuestion;
         newPoll.options = $scope.newChoices;
         //console.log(newPoll);
-        poll.new(newPoll).then(function(result) {
+        poll.new(newPoll,$scope.getUser().username).then(function(result) {
            if (result.data.success){
                alert("Poll Added !");
                $scope.init();
