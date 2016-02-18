@@ -39,10 +39,10 @@ var pollSearchController = function ($scope, $routeParams, pollSearchService) {
             //console.log(result);
         }
         else
-            alert(result.data.message);
+             bootbox.alert(result.data.message);
             
         }, function(reason) {
-            alert("Error: " + reason);
+             bootbox.alert("Error: " + reason);
         });
         
     };

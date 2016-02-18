@@ -12,9 +12,9 @@ angular.module('user.login', ['ngNewRouter'])
            $location.path('/');
        }
         else
-            alert(result.data.message);
+            bootbox.alert(result.data.message);
        }, function(reason) {
-        alert("Error: " + reason);
+         bootbox.alert("Error: " + reason);
     });
   };
       

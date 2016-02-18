@@ -27,10 +27,10 @@ app.directive('searchlist', function() {
             
         }
         else
-            alert(result.data.message);
+             bootbox.alert(result.data.message);
             
         }, function(reason) {
-            alert("Error: " + reason);
+             bootbox.alert("Error: " + reason);
         });
         
     };
@@ -52,10 +52,10 @@ app.directive('searchlist', function() {
             
         }
         else
-            alert(result.data.message);
+             bootbox.alert(result.data.message);
             
         }, function(reason) {
-            alert("Error: " + reason);
+             bootbox.alert("Error: " + reason);
         });
         
     };
@@ -100,27 +100,27 @@ app.directive('searchlist', function() {
             
             if (result.data.success){
             
-                alert("Your poll has been deleted !");
+                bootbox.alert("Your poll has been deleted !");
                 $scope.polls = $filter('findobj')($scope.polls, selectedPoll);
             
             }
             else
-                alert(result.data.message);
+                bootbox.alert(result.data.message);
             
         }, function(reason) {
-            alert("Error: " + reason);
+             bootbox.alert("Error: " + reason);
         });
     };  
         
     $scope.votePoll = function(){
         
         if ($scope.newVote.optionIndex == -2){
-            alert("You must select an option");
+            bootbox.alert("You must select an option");
             return;
         }
         
         if ($scope.newVote.optionIndex == -1 && $scope.newVote.optionText == ""){
-            alert("You must enter the new option's text");
+            bootbox.alert("You must enter the new option's text");
             return;
         }
             
@@ -130,15 +130,15 @@ app.directive('searchlist', function() {
             
             if (result.data.success){
             
-                alert("Your vote has been registered !");
+                bootbox.alert("Your vote has been registered !");
                 $("#votepoll-container").modal('hide');
             
             }
             else
-                alert(result.data.message);
+                bootbox.alert(result.data.message);
             
         }, function(reason) {
-            alert("Error: " + reason);
+            bootbox.alert("Error: " + reason);
         });
     };
         
