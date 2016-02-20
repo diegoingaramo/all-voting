@@ -28,7 +28,19 @@ router.post('/getPollsByUser', token_service.isAuthenticated, function(req, res)
             }else {
                  //search for user's polls
                  //console.log(user);
-                 Poll.find({ownerEmail:user.email}, 'question ownerEmail', function(err, polls) {
+                 //Poll.find({ownerEmail:user.email}, 'question ownerEmail'
+                Poll.aggregate([
+                    { $match: {
+                        ownerEmail:user.email
+                    }},
+                    { $unwind : "$options" },/*
+                    {$project: {question: 1, ownerEmail: 1, totalVotes: 1, _id: 1}},*/
+                    { $group: {
+                        _id: {ownerEmail: "$ownerEmail",question: "$question",_id:"$_id"},
+                        totalVotes: { $sum: "$options.votes"  }
+                    }}
+                    ,{$project: {question: "$_id.question", ownerEmail: "$_id.ownerEmail", totalVotes: 1, _id: "$_id._id"}}
+                ], function(err, polls) {
                      
                      if (err) throw err;
                      

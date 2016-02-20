@@ -1,5 +1,6 @@
 <!-- search polls -->
-<section id="search" class="col-sm-offset-3 col-sm-6" ng-controller="PollSearchController">
+<!--<section id="search" class="col-sm-offset-3 col-sm-6" ng-controller="PollSearchController">-->
+<section id="search" class="col-xs-offset-0 col-xs-12 col-md-offset-0 col-md-12 col-lg-offset-2 col-md-8" ng-controller="PollSearchController">
     <div class="input-group search-container">                       
           <input type="text" class="form-control" placeholder="Search for polls !" aria-describedby="sizing-addon2" ng-model="searchText">
             <span class="input-group-btn">
@@ -8,7 +9,7 @@
     </div>
     
     <div class="row">
-        <div class="col-xs-offset-3 col-xs-8">
+        <div class="col-xs-offset-0 col-xs-12">
             <searchlist polls="searchResults"></searchlist>
         </div>
     </div>
