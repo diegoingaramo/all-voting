@@ -50,7 +50,26 @@ router.post('/search', function(req, res) {
     var searchTextRegEx = new RegExp(".*" + searchText + ".*","gi");
     
     //search for user's polls
-    Poll.find({question:{$regex: searchTextRegEx}}, 'question ownerEmail', function(err, polls) {
+    /*Poll.find({question:{$regex: searchTextRegEx}}, 'question ownerEmail', function(err, polls) {
+    if (err) throw err;
+        
+        res
+            .status(200)
+            .send({success: true, polls: polls});
+    });*/
+    
+    Poll.aggregate([
+        { $match: {
+            question:{$regex: searchTextRegEx}
+        }},
+        { $unwind : "$options" },/*
+        {$project: {question: 1, ownerEmail: 1, totalVotes: 1, _id: 1}},*/
+        { $group: {
+            _id: {ownerEmail: "$ownerEmail",question: "$question",_id:"$_id"},
+            totalVotes: { $sum: "$options.votes"  }
+        }}
+        ,{$project: {question: "$_id.question", ownerEmail: "$_id.ownerEmail", totalVotes: 1, _id: "$_id._id"}}
+    ], function(err, polls) {
                      
         if (err) throw err;
         

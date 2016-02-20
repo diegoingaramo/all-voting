@@ -9,7 +9,6 @@ app.directive('searchlist', function() {
     $scope.newVote = {};
     $scope.viewTable = true;
         
-        
     $scope.viewVotePoll = function(selectedPoll){
         
         //$scope.selectedPoll.question = selectedPoll.question;
